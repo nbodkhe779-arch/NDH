@@ -1,30 +1,38 @@
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_ID"
-};
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NDH - Nicks Design Hub</title>
+</head>
 
-firebase.initializeApp(firebaseConfig);
+<body>
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+<h2>NDH Login</h2>
 
-/* LOGIN */
-window.login = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+<input id="email" type="email" placeholder="Email"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => alert("Login Success"))
-    .catch(e => alert(e.message));
-};
+<select id="role">
+  <option value="customer">Customer</option>
+  <option value="creator">Creator</option>
+</select>
 
-/* SIGNUP */
-window.signup = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+<br><br>
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(() => alert("Signup Success"))
-    .catch(e => alert(e.message));
-};
+<button onclick="signup()">Signup</button>
+<button onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+
+<hr>
+
+<h3>Services</h3>
+<div id="servicesList"></div>
+
+<!-- Firebase CDN (IMPORTANT) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
