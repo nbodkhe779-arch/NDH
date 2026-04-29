@@ -30,8 +30,3 @@ window.login = function () {
     .then(() => alert("Login Success"))
     .catch(e => alert(e.message));
 };
-
-/* LOGOUT */
-window.logout = function () {
-  auth.signOut();
-};
