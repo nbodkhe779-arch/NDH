@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { 
   getAuth, 
-  createUserWithEmailAndPassword, 
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -12,17 +12,17 @@ import {
   setDoc 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* 🔥 Firebase Config (YOUR REAL VALUES HERE) */
+/* 🔥 YOUR FIREBASE CONFIG (READY) */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
+  apiKey: "AIzaSyAcElCId4770Q7wV70WfmG8m0CTF__KJbY",
+  authDomain: "nicks-design-hube.firebaseapp.com",
+  projectId: "nicks-design-hube",
+  storageBucket: "nicks-design-hube.firebasestorage.app",
+  messagingSenderId: "361289302201",
+  appId: "1:361289302201:web:e238156e92777c39e5db68"
 };
 
-/* INIT */
+/* INIT FIREBASE */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -41,9 +41,9 @@ window.signup = async function () {
       role
     });
 
-    alert("Signup Successful");
-  } catch (e) {
-    alert(e.message);
+    alert("Signup Successful ✔");
+  } catch (error) {
+    alert(error.message);
   }
 };
 
@@ -54,9 +54,9 @@ window.login = async function () {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    alert("Login Successful");
-  } catch (e) {
-    alert(e.message);
+    alert("Login Successful ✔");
+  } catch (error) {
+    alert(error.message);
   }
 };
 
