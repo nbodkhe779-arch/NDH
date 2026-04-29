@@ -10,22 +10,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-const db = firebase.firestore();
 
 /* SIGNUP */
 window.signup = function () {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const role = document.getElementById("role").value;
 
   auth.createUserWithEmailAndPassword(email, password)
-    .then(user => {
-      db.collection("users").doc(user.user.uid).set({
-        email,
-        role
-      });
-      alert("Signup Success");
-    })
+    .then(() => alert("Signup Success"))
     .catch(e => alert(e.message));
 };
 
