@@ -1,8 +1,15 @@
-const firebaseConfig = {
-  apiKey: "REAL_API_KEY_FROM_FIREBASE",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "xxx",
-  appId: "xxx"
+window.signup = async function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  await createUserWithEmailAndPassword(auth, email, password);
+  alert("Signup Success");
+};
+
+window.login = async function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  await signInWithEmailAndPassword(auth, email, password);
+  alert("Login Success");
 };
