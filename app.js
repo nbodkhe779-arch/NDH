@@ -7,42 +7,39 @@ const firebaseConfig = {
   appId: "YOUR_APP_ID"
 };
 
-/* INIT */
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* ---------------- SIGNUP ---------------- */
+/* SIGNUP */
 window.signup = function () {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const role = document.getElementById("role").value;
 
   auth.createUserWithEmailAndPassword(email, password)
-    .then((user) => {
+    .then(user => {
       db.collection("users").doc(user.user.uid).set({
-        email: email,
-        role: role
+        email,
+        role
       });
-
-      alert("Signup Successful ✔");
+      alert("Signup Success");
     })
     .catch(e => alert(e.message));
 };
 
-/* ---------------- LOGIN ---------------- */
+/* LOGIN */
 window.login = function () {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => alert("Login Successful ✔"))
+    .then(() => alert("Login Success"))
     .catch(e => alert(e.message));
 };
 
-/* ---------------- LOGOUT ---------------- */
+/* LOGOUT */
 window.logout = function () {
   auth.signOut();
-  alert("Logged out");
 };
