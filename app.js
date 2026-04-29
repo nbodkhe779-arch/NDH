@@ -1,38 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>NDH - Nicks Design Hub</title>
-</head>
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_ID",
+  appId: "YOUR_APP_ID"
+};
 
-<body>
+/* INIT */
+firebase.initializeApp(firebaseConfig);
 
-<h2>NDH Login</h2>
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-<input id="email" type="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+/* ---------------- SIGNUP ---------------- */
+window.signup = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const role = document.getElementById("role").value;
 
-<select id="role">
-  <option value="customer">Customer</option>
-  <option value="creator">Creator</option>
-</select>
+  auth.createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      db.collection("users").doc(user.user.uid).set({
+        email: email,
+        role: role
+      });
 
-<br><br>
+      alert("Signup Successful ✔");
+    })
+    .catch(e => alert(e.message));
+};
 
-<button onclick="signup()">Signup</button>
-<button onclick="login()">Login</button>
-<button onclick="logout()">Logout</button>
+/* ---------------- LOGIN ---------------- */
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-<hr>
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => alert("Login Successful ✔"))
+    .catch(e => alert(e.message));
+};
 
-<h3>Services</h3>
-<div id="servicesList"></div>
-
-<!-- Firebase CDN (IMPORTANT) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-<script src="app.js"></script>
-
-</body>
-</html>
+/* ---------------- LOGOUT ---------------- */
+window.logout = function () {
+  auth.signOut();
+  alert("Logged out");
+};
