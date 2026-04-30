@@ -56,3 +56,14 @@ window.logout = function () {
     alert("Logged out ✔");
   });
 };
+window.addService = function () {
+  const title = document.getElementById("title").value;
+  const price = document.getElementById("price").value;
+
+  firebase.firestore().collection("services").add({
+    title: title,
+    price: price
+  });
+
+  alert("Service Added ✔");
+};
