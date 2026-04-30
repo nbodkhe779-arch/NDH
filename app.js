@@ -1,87 +1,30 @@
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAcElCId4770Q7wV70WfmG8m0CTF__KJbY",
-  authDomain: "nicks-design-hube.firebaseapp.com",
-  projectId: "nicks-design-hube",
-  storageBucket: "nicks-design-hube.appspot.com",
-  messagingSenderId: "361289302201",
-  appId: "1:361289302201:web:e238156e92777c39e5db68"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-
-/* ---------------- SIGNUP ---------------- */
-window.signup = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    alert("Email & Password required");
-    return;
-  }
-
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      alert("Signup Successful ✔");
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
-
-/* ---------------- LOGIN ---------------- */
-window.login = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    alert("Enter Email & Password");
-    return;
-  }
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      alert("Login Successful ✔");
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
-
-/* ---------------- LOGOUT ---------------- */
-window.logout = function () {
-  auth.signOut().then(() => {
-    alert("Logged out ✔");
-  });
-};
 window.addService = function () {
+
+  const file = document.getElementById("imageFile").files[0];
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
 
-  firebase.firestore().collection("services").add({
-    title: title,
-    price: price
-  });
+  if (!file) {
+    alert("Please select image");
+    return;
+  }
 
-  alert("Service Added ✔");
-};
-firebase.firestore().collection("services")
-  .onSnapshot(snapshot => {
+  const storageRef = firebase.storage().ref("services/" + file.name);
 
-    let html = "";
+  storageRef.put(file).then(() => {
 
-    snapshot.forEach(doc => {
-      let data = doc.data();
+    storageRef.getDownloadURL().then((url) => {
 
-      html += `
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-          <h4>${data.title}</h4>
-          <p>₹ ${data.price}</p>
-        </div>
-      `;
+      firebase.firestore().collection("services").add({
+        title: title,
+        price: price,
+        image: url
+      });
+
+      alert("Service Added ✔");
+
     });
 
-    document.getElementById("servicesList").innerHTML = html;
   });
+
+};
