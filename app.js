@@ -7,9 +7,15 @@ firebase.firestore().collection("services")
       let data = doc.data();
 
       html += `
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-          <img src="${data.image}" width="150"><br>
-          <h4>${data.title}</h4>
+        <div style="
+          width:200px;
+          border:1px solid #ddd;
+          padding:10px;
+          border-radius:10px;
+          box-shadow:0 2px 5px rgba(0,0,0,0.1);
+        ">
+          <img src="${data.image}" width="100%" style="border-radius:8px;"><br>
+          <h3>${data.title}</h3>
           <p>₹ ${data.price}</p>
         </div>
       `;
