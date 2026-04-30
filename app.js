@@ -1,30 +1,19 @@
-window.addService = function () {
+firebase.firestore().collection("services")
+  .onSnapshot(snapshot => {
 
-  const file = document.getElementById("imageFile").files[0];
-  const title = document.getElementById("title").value;
-  const price = document.getElementById("price").value;
+    let html = "";
 
-  if (!file) {
-    alert("Please select image");
-    return;
-  }
+    snapshot.forEach(doc => {
+      let data = doc.data();
 
-  const storageRef = firebase.storage().ref("services/" + file.name);
-
-  storageRef.put(file).then(() => {
-
-    storageRef.getDownloadURL().then((url) => {
-
-      firebase.firestore().collection("services").add({
-        title: title,
-        price: price,
-        image: url
-      });
-
-      alert("Service Added ✔");
-
+      html += `
+        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+          <img src="${data.image}" width="150"><br>
+          <h4>${data.title}</h4>
+          <p>₹ ${data.price}</p>
+        </div>
+      `;
     });
 
+    document.getElementById("servicesList").innerHTML = html;
   });
-
-};
