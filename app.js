@@ -10,13 +10,17 @@ window.login = function () {
       firebase.firestore().collection("users").doc(user.uid).get()
         .then((doc) => {
 
+          if (!doc.exists) {
+            alert("User profile missing!");
+            return;
+          }
+
           const role = doc.data().role;
 
           if (role === "creator") {
             alert("Creator Login ✔");
             window.location.href = "creator.html";
-          } 
-          else {
+          } else {
             alert("Customer Login ✔");
             window.location.href = "index.html";
           }
